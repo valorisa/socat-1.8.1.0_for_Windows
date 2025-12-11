@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-ARG PYTHON_VERSION=3.13.2
+ARG PYTHON_VERSION=3.14.2
 FROM python:${PYTHON_VERSION}-slim as base
 
 # Prévenir l'écriture des fichiers pyc
@@ -19,8 +19,8 @@ RUN apt-get update && apt-get install -y \
     bash \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Installer une version spécifique de socat (1.8.0.3)
-ARG SOCAT_VERSION=1.8.0.3
+# Installer une version spécifique de socat (1.8.1.0)
+ARG SOCAT_VERSION=1.8.1.0
 RUN wget http://www.dest-unreach.org/socat/download/socat-${SOCAT_VERSION}.tar.gz && \
     tar -xzf socat-${SOCAT_VERSION}.tar.gz && \
     cd socat-${SOCAT_VERSION} && \
