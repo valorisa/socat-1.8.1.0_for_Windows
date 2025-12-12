@@ -1,0 +1,98 @@
+# Cheat sheet: build & push Docker image for socat 1.8.1.0
+
+## Local directory
+
+All commands below must be run from:
+
+```text
+C:\Users\bbrod\Projets\socat-1.8.1.0\Install_from_dockerfile
+```
+
+This directory contains the `Dockerfile`, `requirements.txt` and the `socat/` package used by the image.
+
+***
+
+## 1. Build local image
+
+```powershell
+docker build -t socat-api:1.8.1.0 .
+```
+
+- `NAME` = `socat-api`  
+- `TAG`  = `1.8.1.0`  
+
+This creates a local image `socat-api:1.8.1.0` based on `python:3.14.2-slim-bookworm` with socat 1.8.1.0 compiled inside. 
+
+Check it:
+
+```powershell
+docker images socat-api
+```
+
+***
+
+## 2. Tag image for Docker Hub
+
+Docker Hub account:  
+
+- `USER` = `eb33692e0225`  
+- `REPO` = `socat-1.8.1.0`  
+
+Create tags for Docker Hub:
+
+```powershell
+docker tag socat-api:1.8.1.0 eb33692e0225/socat-1.8.1.0:1.8.1.0
+docker tag socat-api:1.8.1.0 eb33692e0225/socat-1.8.1.0:latest
+```
+
+Here:
+
+- Full remote name with explicit version:  
+  `USER/REPO:TAG` = `eb33692e0225/socat-1.8.1.0:1.8.1.0`  
+- Full remote name with `latest`:  
+  `eb33692e0225/socat-1.8.1.0:latest`[1][2]
+
+***
+
+## 3. Login to Docker Hub
+
+```powershell
+docker login
+# username: eb33692e0225
+# single password or password and access token
+```
+
+
+***
+
+## 4. Push tags to Docker Hub
+
+```powershell
+docker push eb33692e0225/socat-1.8.1.0:1.8.1.0
+docker push eb33692e0225/socat-1.8.1.0:latest
+```
+
+After this, the Docker Hub repository  
+`https://hub.docker.com/r/eb33692e0225/socat-1.8.1.0`  
+shows the tags `1.8.1.0` and `latest` under the **Tags** tab.[3][4]
+
+***
+
+## 5. Pull and run (from any machine)
+
+```bash
+docker pull eb33692e0225/socat-1.8.1.0:1.8.1.0
+docker run --rm -p 8181:8181 --name socat-api eb33692e0225/socat-1.8.1.0:1.8.1.0
+```
+
+Then test:
+
+```bash
+curl http://127.0.0.1:8181/
+# expected: "socat 1.8.1.0 Docker demo"
+```
+
+[1](https://docs.docker.com/reference/cli/docker/image/push/)
+[2](https://docs.docker.com/get-started/docker-concepts/building-images/build-tag-and-publish-an-image/)
+[3](https://docs.docker.com/docker-hub/repos/manage/hub-images/tags/)
+[4](https://docs.docker.com/get-started/introduction/build-and-push-first-image/)
