@@ -2,7 +2,7 @@
 
 ## Local directory
 
-All commands below must be run from:
+All commands below can be run from:
 
 ```text
 C:\Users\<your_username>\Projets\socat-1.8.1.0\Install_from_dockerfile
